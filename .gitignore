@@ -16,5 +16,3 @@ build/
 dist/
 *.egg-info/
 venv/
-
-articles/
