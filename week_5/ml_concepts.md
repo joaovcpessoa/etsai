@@ -77,3 +77,54 @@ CNNs precisam ver variações (rotação, zoom, brilho, inversão, etc.) para ap
 Mesmo com regularização, treinar por muitas épocas faz a rede se ajustar demais aos dados de treino. (Por isso se usa early stopping.)<br>
 Distribuição diferente entre treino e validação.<br>
 Quando o conjunto de validação vem de uma fonte ou condição diferente (ex: iluminação, fundo, tipo de câmera), o modelo se ajusta ao domínio do treino e falha fora dele.
+
+### Install CUDA and Libraries
+
+### Tensorflow CUDA setup
+
+Para quem possuir GPU:
+
+1. No terminal, digite:
+
+```bash
+nvidia-smi
+```
+
+Isso deve mostrar sua GPU, versão do driver e uso de memória. 
+Se retornar um array vazio, será necessário instalar o driver NVIDIA.
+
+2. Verifique compatibilidade CUDA/cuDNN com TensorFlow
+
+TensorFlow precisa de versões específicas do CUDA e cuDNN.
+
+Exemplo para TensorFlow 2.14+:
+
+Componente	Versão recomendada
+CUDA	12.2
+cuDNN	8.9
+Driver NVIDIA	≥ 530.30
+
+Se você não tiver essas versões, TensorFlow não verá sua GPU.
+
+3️⃣ Instale CUDA e cuDNN
+
+Baixe o CUDA Toolkit compatível.
+Baixe cuDNN compatível.
+
+Extraia os arquivos e configure as variáveis de ambiente:
+
+CUDA_PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.2
+PATH=%CUDA_PATH%\bin;%PATH%
+
+4️⃣ Reinstale TensorFlow
+
+Depois de configurar CUDA e cuDNN corretamente:
+
+pip uninstall tensorflow
+pip install tensorflow
+
+Não precisa instalar “tensorflow-gpu”, o tensorflow moderno já inclui suporte a GPU.
+
+print(f'CUDA ativo: {torch.cuda.is_available()}')
+print(f'Quantidade de GPUs disponíveis: {torch.cuda.device_count()}')
+print(f'Nome da GPU: {torch.cuda.get_device_name(0)}')

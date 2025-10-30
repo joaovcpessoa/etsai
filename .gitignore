@@ -1,17 +1,12 @@
-# Ignorar todos os __pycache__ recursivamente
 **/__pycache__/
 **/*.py[cod]
-# Ignorar arquivos Python compilados
 *.pyc
 *.pyo
 *.pyd
-# Ignorar qualquer arquivo .env em qualquer pasta
 **/*.env
 **/data/
 .vscode/
-# Ignorar arquivos de log
 *.log
-# Ignorar pastas de build/instalação
 build/
 dist/
 *.egg-info/

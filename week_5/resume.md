@@ -77,4 +77,45 @@ Se f é a rede neural de valor escalar, ela mapeia a entrada vetorial x para um 
 
 Podemos visualizar a magnitude dos gradientes que destaca as partes importantes da imagem
 
-Fazer várias saídas e ver se o mapa de saliência difere.
+Um dos principais problemas de utilizar gradientes para gerar mapas de saliência é que eles dependem das variações locais da função de saída em relação à entrada. Isso significa que regiões planas ou uniformes da imagem, onde a função do modelo muda pouco ou nada , recebem pouca ou nenhuma atribuição, mesmo que sejam semanticamente importantes para a decisão do modelo. Em outras palavras, os gradientes podem ignorar características relevantes simplesmente porque a função é localmente constante nessa região.
+
+Atribuição de importância em métodos de gradiente mede quanto a saída do modelo muda se você alterar um pixel.
+Se a saída muda muito ao mexer em um pixel, o modelo considera esse pixel importante.
+Se a saída muda pouco ou nada, o pixel é considerado irrelevante, mesmo que faça parte de uma característica visual significativa.
+Em outras palavras, a importância não é dada pelo conteúdo semântico da imagem, mas pelo grau de sensibilidade da função do modelo à entrada.
+
+Isso é o que gradientes capturam
+
+Recomendação futura: Fazer um modelo com várias saídas e ver se o mapa de saliência difere
+
+
+## Resultado do primeiro experimento
+
+### Acurácia por Época
+
+- Tendência geral: Ambas as curvas apresentam um crescimento consistente da acurácia, partindo de aproximadamente 0.50-0.52 (50%) e atingindo valores entre 0.85-0.90 (85-90%) ao final do treinamento.
+- Comportamento inicial (épocas 0-40): Crescimento rápido e acentuado da acurácia, com a curva de validação (vermelho) apresentando maior volatilidade (oscilações mais pronunciadas) que a de treinamento (azul).
+- Comportamento intermediário/final (épocas 40-100): As curvas convergem e se estabilizam em torno de 85-90%, com oscilações moderadas. As duas curvas se entrelaçam frequentemente, sem um gap consistente.
+- Volatilidade da validação: A acurácia de validação apresenta picos e quedas mais acentuados ao longo de todo o treinamento, o que é esperado, pois o conjunto de validação é menor e mais sensível a variações.
+
+### Perda por Época
+
+- Tendência geral: Ambas as curvas (treinamento em azul e validação em vermelho) apresentam uma redução consistente da perda ao longo das épocas, partindo de aproximadamente 0.70 e chegando a valores entre 0.25-0.35 ao final.
+- Comportamento inicial (épocas 0-40): Há uma queda acentuada e relativamente suave na perda, indicando que o modelo está aprendendo rapidamente os padrões dos dados.
+- Comportamento intermediário/final (épocas 40-100): A perda continua diminuindo, mas de forma mais gradual, com maior oscilação na curva de validação.
+- Gap entre treinamento e validação: A partir da época 40, nota-se que a perda de validação (vermelho) se mantém consistentemente acima da perda de treinamento (azul), e essa diferença aumenta ligeiramente nas épocas finais. Isso sugere um início de overfitting (sobreajuste), onde o modelo está se ajustando melhor aos dados de treinamento do que aos dados de validação.
+
+### Resumo:
+O modelo está aprendendo efetivamente, com redução consistente da perda e aumento da acurácia, finalizando com ~85-90%, o que indica um desempenho razoável. Não há sinais de "underfitting", pois o modelo consegue aprender os padrões dos dados.
+
+O gap crescente entre as perdas de treinamento e validação (especialmente visível após a época 60) sugere que o modelo pode estar começando a memorizar os dados de treinamento em vez de generalizar. As oscilações na curva vermelha de acurácia sugerem que o conjunto de validação pode ser pequeno ou que o modelo é sensível a variações nos dados
+
+### Melhorias:
+
+No geral, o treinamento parece estar progredindo adequadamente, mas há espaço para otimização para melhorar a generalização do modelo.
+
+Melhorias mapeadas:
+- Considerar early stopping (parada antecipada) em torno da época 60-70, quando a perda de validação começa a se estabilizar
+- Aplicar técnicas de regularização (dropout, weight decay) para reduzir o overfitting
+- Avaliar se o conjunto de validação é representativo e suficientemente grande
+- Considerar data augmentation para aumentar a diversidade dos dados de treinamento
