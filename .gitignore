@@ -1,13 +1,46 @@
-**/__pycache__/
-**/*.py[cod]
-*.pyc
-*.pyo
-*.pyd
-**/*.env
-**/data/
-.vscode/
-*.log
+# Arquivos Python compilados
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambientes e dependências
+.venv/
+venv/
+env/
+*.env
+
+# Builds e distribuições
 build/
 dist/
 *.egg-info/
-venv/
+.eggs/
+*.manifest
+*.spec
+
+# IDEs e ferramentas
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs e temporários
+*.log
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+
+# Dados e resultados
+data/
+datasets/
+**/data/
+
+# Arquivos de bloqueio temporários
+.~lock.*
+
+# Jupyter / Experimentos
+.ipynb_checkpoints/
+*.checkpoint
+
+# Outros
+__MACOSX/
